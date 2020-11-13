@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import Item from './Item'
-import {Row} from 'antd';
+import {Row, Spin, List, Avatar, Space, Col, Divider} from 'antd';
+import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
 function Dashboard(props) {
     const history = useHistory();
@@ -9,6 +10,10 @@ function Dashboard(props) {
     const [language, setLanguage] = useState('en');
     const [pageNumber, setPageNumber] = useState(1);
     const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetchAdv()
+    });
 
     const fetchAdv = async () => {
 
@@ -31,12 +36,28 @@ function Dashboard(props) {
 
 
     return (
-        <div>
-            <button onClick={() => fetchAdv()}>TRY</button>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            { items.map(item => <Item {...item}/>)}
+            <Row>
+                {items.length ?
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        // pagination={{
+                        //     onChange: page => {console.log(page);},
+                        //     pageSize: 3,
+                        // }}
+                        dataSource={items}
+                        footer={
+                            <div>
+                                <b>ant design</b> footer part
+                            </div>
+                        }
+                        renderItem={item => <Col span={16} offset={4} onHoverChange={<style></style>}><a
+                            href={item.url}><Item{...item}/></a>
+                            <Divider/></Col>}
+                    />
+                    : <Spin size='large' tip="Loading..." style={{position: 'absolute', top: '40%', left: '48%'}}/>
+                }
             </Row>
-        </div>
     )
 
 }

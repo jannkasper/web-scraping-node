@@ -1,36 +1,36 @@
-import { Col, Card, Avatar, Form, Input, Button, Divider } from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import React, {useState} from 'react'
+import { Col, Row, List, Avatar, Space, Descriptions } from 'antd';
+import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
-const { Meta } = Card;
-
+const IconText = ({ icon, text }) => (
+    <Space>
+        {React.createElement(icon)}
+        {text}
+    </Space>
+);
 
 
 function Item(props) {
-    console.log(props);
+    const [boxShadow, setBoxShadow] = useState({});
+
     return (
-        <Col className="gutter-row" span={6}>
-        <Card
-            style={{ width: 300 }}
-            cover={
-                <img
-                    alt="example"
-                    src={props.imageUrl}
-                />
-            }
-            actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-            ]}
+        <List.Item
+            onMouseEnter={() => setBoxShadow({boxShadow: "0 0 20px #bebebe", })}
+            onMouseLeave={() => setBoxShadow({})}
+            style={boxShadow}
+            key={props.title}
+            extra={<img style={{borderRadius: '10px' }} width={272} alt="logo" src={props.imageUrl}/>}
         >
-            <Meta
-                avatar={<Avatar src={props.imageUrl} />}
-                title="Card title"
-                description="This is the description"
-            />
-        </Card>
-        </Col>
+            <Descriptions title={props.title}>
+                <Descriptions.Item label="Seller">{props.seller}</Descriptions.Item>
+                <Descriptions.Item label="Address">{props.address}</Descriptions.Item>
+                <Descriptions.Item label="First registration">{props.firstRegistration}</Descriptions.Item>
+                <Descriptions.Item label="Kilometer">{props.kilometer}</Descriptions.Item>
+                <Descriptions.Item label="Power">{props.power}</Descriptions.Item>
+                <Descriptions.Item label="Price">{props.price}</Descriptions.Item>
+            </Descriptions>
+        </List.Item>
     )
 }
 
