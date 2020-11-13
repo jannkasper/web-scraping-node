@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const vehicles = require('../controllers/vehicles.controller');
 
-router.get('/', vehicles.vehicleList);
+router.post('/', vehicles.vehicleList);
 
-router.get('/object', vehicles.vehicleSingle);
+router.post('/object', vehicles.vehicleSingle);
 
 module.exports = router;
